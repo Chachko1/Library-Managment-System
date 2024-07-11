@@ -28,6 +28,10 @@ public class BookService {
         return bookRepository.findByIsbn(isbn).map(bookMapper::toDTO).orElse(null);
     }
 
+    public BookDTO getBookById(Long id){
+        return bookRepository.findBookById(id).map(bookMapper::toDTO).orElse(null);
+    }
+
     public BookDTO saveBook(BookDTO bookDTO){
         Book book=bookMapper.toEntity(bookDTO);
         return bookMapper.toDTO(bookRepository.save(book));

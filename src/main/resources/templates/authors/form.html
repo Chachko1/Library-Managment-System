@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang = "en">
+<head>
+    <meta charset="UTF-8">
+    <title>Add new Author</title>
+</head>
+<body>
+<h1>Author Form</h1>
+<form th:action="@{/authors}" th:object="${author}" method="post">
+    <input type="hidden" th:field="*{id}"/>
+    <div>
+        <label for="name">Name:</label>
+        <input type="text" id="name" th:field="*{name}" />
+        <div th:if="${#fields.hasErrors('name')}" th:errors="*{name}">Name Error</div>
+    </div>
+
+        <button type="submit">Save</button>
+    </div>
+</form>
+<a th:href="@{/authors}">Back to Authors</a>
+</body>
+</html>
