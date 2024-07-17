@@ -7,17 +7,20 @@ public class BookDTO {
 
     private String authorName;
 
+    private Long authorId;
+
     private String isbn;
 
     public BookDTO() {
 
     }
 
-    public BookDTO(long id, String title, String authorName, String isbn) {
+    public BookDTO(long id, String title, String authorName, String isbn, long authorId) {
         this.id = id;
         this.title = title;
         this.authorName = authorName;
         this.isbn = isbn;
+        this.authorId = authorId;
     }
 
     public long getId() {
@@ -50,5 +53,13 @@ public class BookDTO {
 
     public void setIsbn(String isbn) {
         this.isbn = isbn;
+    }
+
+    public Long getAuthorId() {
+        return authorId;
+    }
+
+    public void setAuthorId(Long authorId) {
+        this.authorId = authorId;
     }
 }

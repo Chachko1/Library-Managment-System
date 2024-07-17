@@ -5,6 +5,28 @@
     <title>Title</title>
 </head>
 <body>
+<h1>Books</h1>
+<table>
+    <thead>
+    <tr>
+        <th>Tittle</th>
+        <th>Author Name</th>
+        <th>ISBN</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr th:each="book : ${books}">
+        <td th:text="${book.title}">Title</td>
+        <td th:text="${book.authorName}">Author</td>
+        <td th:text="${book.isbn}">ISBN</td>
+        <td>
+
+            <a th:href="@{/books/delete/{id}(id=${book.id})}">Delete</a>
+        </td>
+    </tr>
+    </tbody>
+</table>
+<a th:href="@{/books/new}">Add New Book</a>
 
 </body>
 </html>

@@ -5,6 +5,7 @@ import org.librarymanagementsystem.DTOs.BookDTO;
 import org.librarymanagementsystem.mappers.BookMapper;
 import org.librarymanagementsystem.models.Author;
 import org.librarymanagementsystem.models.Book;
+import org.librarymanagementsystem.repositories.AuthorRepository;
 import org.librarymanagementsystem.repositories.BookRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -17,6 +18,9 @@ public class BookService {
 
     @Autowired
     private BookRepository bookRepository;
+
+    @Autowired
+    private AuthorRepository authorRepository;
 
     @Autowired
     private BookMapper bookMapper;
@@ -34,6 +38,10 @@ public class BookService {
 
     public BookDTO saveBook(BookDTO bookDTO){
         Book book=bookMapper.toEntity(bookDTO);
+        if (bookDTO.getAuthorId() != null) {
+            Author author = authorRepository.findById(bookDTO.getAuthorId()).orElseThrow(() -> new RuntimeException("Author not found"));
+            book.setAuthor(author);
+        }
         return bookMapper.toDTO(bookRepository.save(book));
     }
 

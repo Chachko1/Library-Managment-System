@@ -1,7 +1,10 @@
 package org.librarymanagementsystem.Controllers;
 
 import jakarta.validation.Valid;
+import org.librarymanagementsystem.DTOs.AuthorDTO;
 import org.librarymanagementsystem.DTOs.BookDTO;
+import org.librarymanagementsystem.models.Author;
+import org.librarymanagementsystem.services.AuthorService;
 import org.librarymanagementsystem.services.BookService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -18,16 +21,27 @@ public class BookController {
     @Autowired
     private BookService bookService;
 
+    @Autowired
+    private AuthorService authorService;
+
     @GetMapping
     public String listBooks(Model model){
         List<BookDTO> books = bookService.getAllBooks();
         model.addAttribute("books",books);
+
+        List<AuthorDTO> authors = authorService.getAllAuthors();
+        model.addAttribute("authors",authors);
+
         return "books/list";
     }
 
     @GetMapping("/new")
     public String showBookForm(Model model){
         model.addAttribute("book", new BookDTO());
+
+        List<AuthorDTO> authors = authorService.getAllAuthors();
+        model.addAttribute("authors",authors);
+
         return "books/form";
     }
 
