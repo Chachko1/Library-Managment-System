@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<h1>Borrowed Record Form</h1>
+<form th:action="@{/borrowedRecords}" th:object="${borrowedRecord}" method="post">
+  <input type="hidden" th:field="*{id}"/>
+  <div>
+    <div>
+      <label for="Member">Member:</label>
+      <select id="Member" th:field="*{memberId}">
+        <option value="" disabled selected>Select an author</option>
+        <option th:each="member : ${members}" th:value="${member.id}" th:text="${member.username}"></option>
+      </select>
+      <div th:if="${#fields.hasErrors('memberId')}" th:errors="*{memberId}">Member Error</div>
+    </div>
+    <div>
+      <label for="Book">Book:</label>
+      <select id="Book" th:field="*{bookId}">
+        <option value="" disabled selected>Select a book</option>
+        <option th:each="book : ${books}" th:value="${book.id}" th:text="${book.title}"></option>
+      </select>
+      <div th:if="${#fields.hasErrors('bookId')}" th:errors="*{bookId}">Book Error</div>
+    </div>
+    <label for="borrowedDate">Borrow Date:</label>
+    <input type="date" id="borrowedDate" th:field="*{borrowedDate}" />
+    <div th:if="${#fields.hasErrors('borrowedDate')}" th:errors="*{borrowedDate}">Borrow Date Error</div>
+
+    <label for="returnedDate">Return Date:</label>
+    <input type="date" id="returnedDate" th:field="*{returnedDate}" />
+    <div th:if="${#fields.hasErrors('returnedDate')}" th:errors="*{returnedDate}">Return Date Error</div>
+  </div>
+
+
+  <button type="submit">Save</button>
+</form>
+<a th:href="@{/borrowedRecords}">Back to Borrowed records</a>
+
+</body>
+</html>

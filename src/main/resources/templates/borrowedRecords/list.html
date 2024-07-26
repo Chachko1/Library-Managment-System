@@ -2,9 +2,34 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Title</title>
+    <title>Borrowed Records</title>
 </head>
 <body>
+<h1>Books</h1>
+<table>
+    <thead>
+    <tr>
+        <th>Member</th>
+        <th>Book tittle</th>
+        <th>Borrowed Date</th>
+        <th>Returned Date</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr th:each="borrowedRecord : ${borrowedRecords}">
+        <td th:text="${borrowedRecord.getMemberName()}">Member</td>
+        <td th:text="${borrowedRecord.getBookName()}">Book</td>
+        <td th:text="${borrowedRecord.borrowedDate}">Borrowed date</td>
+        <td th:text="${borrowedRecord.returnedDate}">Returned date</td>
+        <td>
+
+            <a th:href="@{/borrowedRecords/delete/{id}(id=${borrowedRecord.id})}">Delete</a>
+        </td>
+    </tr>
+    </tbody>
+</table>
+<a th:href="@{/borrowedRecords/new}">Add New Borrowed Record</a>
+
 
 </body>
 </html>
