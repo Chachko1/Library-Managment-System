@@ -2,34 +2,40 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>Borrowed Records</title>
+
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
 </head>
 <body>
-<h1>Books</h1>
-<table>
-    <thead>
-    <tr>
-        <th>Member</th>
-        <th>Book tittle</th>
-        <th>Borrowed Date</th>
-        <th>Returned Date</th>
-    </tr>
-    </thead>
-    <tbody>
-    <tr th:each="borrowedRecord : ${borrowedRecords}">
-        <td th:text="${borrowedRecord.getMemberName()}">Member</td>
-        <td th:text="${borrowedRecord.getBookName()}">Book</td>
-        <td th:text="${borrowedRecord.borrowedDate}">Borrowed date</td>
-        <td th:text="${borrowedRecord.returnedDate}">Returned date</td>
-        <td>
+<div class="container mt-5">
+    <h1 class="mb-4">Borrowed Records</h1>
+    <table class="table table-striped">
+        <thead>
+        <tr>
+            <th>Member</th>
+            <th>Book Title</th>
+            <th>Borrowed Date</th>
+            <th>Returned Date</th>
+            <th>Actions</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="borrowedRecord : ${borrowedRecords}">
+            <td th:text="${borrowedRecord.getMemberName()}">Member</td>
+            <td th:text="${borrowedRecord.getBookName()}">Book</td>
+            <td th:text="${borrowedRecord.borrowedDate}">Borrowed Date</td>
+            <td th:text="${borrowedRecord.returnedDate}">Returned Date</td>
+            <td>
+                <a th:href="@{/borrowedRecords/delete/{id}(id=${borrowedRecord.id})}" class="btn btn-danger btn-sm">Delete</a>
+            </td>
+        </tr>
+        </tbody>
+    </table>
+    <a th:href="@{/borrowedRecords/new}" class="btn btn-primary">Add New Borrowed Record</a>
+</div>
 
-            <a th:href="@{/borrowedRecords/delete/{id}(id=${borrowedRecord.id})}">Delete</a>
-        </td>
-    </tr>
-    </tbody>
-</table>
-<a th:href="@{/borrowedRecords/new}">Add New Borrowed Record</a>
 
-
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>

@@ -1,43 +1,62 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <title>Title</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Borrowed Record Form</title>
+
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
 </head>
 <body>
-<h1>Borrowed Record Form</h1>
-<form th:action="@{/borrowedRecords}" th:object="${borrowedRecord}" method="post">
-  <input type="hidden" th:field="*{id}"/>
-  <div>
-    <div>
-      <label for="Member">Member:</label>
-      <select id="Member" th:field="*{memberId}">
-        <option value="" disabled selected>Select an author</option>
+<div class="container mt-5">
+  <h1 class="mb-4">Borrowed Record Form</h1>
+  <form th:action="@{/borrowedRecords}" th:object="${borrowedRecord}" method="post" class="needs-validation" novalidate>
+    <input type="hidden" th:field="*{id}"/>
+
+    <div class="mb-3">
+      <label for="Member" class="form-label">Member:</label>
+      <select id="Member" th:field="*{memberId}" class="form-select" required>
+        <option value="" disabled selected>Select a member</option>
         <option th:each="member : ${members}" th:value="${member.id}" th:text="${member.username}"></option>
       </select>
-      <div th:if="${#fields.hasErrors('memberId')}" th:errors="*{memberId}">Member Error</div>
+      <div th:if="${#fields.hasErrors('memberId')}" th:errors="*{memberId}" class="invalid-feedback">
+        Member Error
+      </div>
     </div>
-    <div>
-      <label for="Book">Book:</label>
-      <select id="Book" th:field="*{bookId}">
+
+    <div class="mb-3">
+      <label for="Book" class="form-label">Book:</label>
+      <select id="Book" th:field="*{bookId}" class="form-select" required>
         <option value="" disabled selected>Select a book</option>
         <option th:each="book : ${books}" th:value="${book.id}" th:text="${book.title}"></option>
       </select>
-      <div th:if="${#fields.hasErrors('bookId')}" th:errors="*{bookId}">Book Error</div>
+      <div th:if="${#fields.hasErrors('bookId')}" th:errors="*{bookId}" class="invalid-feedback">
+        Book Error
+      </div>
     </div>
-    <label for="borrowedDate">Borrow Date:</label>
-    <input type="date" id="borrowedDate" th:field="*{borrowedDate}" />
-    <div th:if="${#fields.hasErrors('borrowedDate')}" th:errors="*{borrowedDate}">Borrow Date Error</div>
 
-    <label for="returnedDate">Return Date:</label>
-    <input type="date" id="returnedDate" th:field="*{returnedDate}" />
-    <div th:if="${#fields.hasErrors('returnedDate')}" th:errors="*{returnedDate}">Return Date Error</div>
-  </div>
+    <div class="mb-3">
+      <label for="borrowedDate" class="form-label">Borrow Date:</label>
+      <input type="date" id="borrowedDate" th:field="*{borrowedDate}" class="form-control" required/>
+      <div th:if="${#fields.hasErrors('borrowedDate')}" th:errors="*{borrowedDate}" class="invalid-feedback">
+        Borrow Date Error
+      </div>
+    </div>
+
+    <div class="mb-3">
+      <label for="returnedDate" class="form-label">Return Date:</label>
+      <input type="date" id="returnedDate" th:field="*{returnedDate}" class="form-control" required/>
+      <div th:if="${#fields.hasErrors('returnedDate')}" th:errors="*{returnedDate}" class="invalid-feedback">
+        Return Date Error
+      </div>
+    </div>
+
+    <button type="submit" class="btn btn-primary">Save</button>
+  </form>
+  <a th:href="@{/borrowedRecords}" class="btn btn-secondary mt-3">Back to Borrowed Records</a>
+</div>
 
 
-  <button type="submit">Save</button>
-</form>
-<a th:href="@{/borrowedRecords}">Back to Borrowed records</a>
-
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>
