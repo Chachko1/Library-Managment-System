@@ -36,7 +36,11 @@ public class ReviewController {
     @Autowired
     private UserSession userSession;
     @GetMapping("/review-form")
+
     public String getReviewForm(Model model){
+        if (!userSession.isLoggedIn()){
+            return "redirect:/login";
+        }
         model.addAttribute("review", new Review());
         List<Book> books = bookService.findAllBooks();
         model.addAttribute("books", books);
@@ -44,10 +48,14 @@ public class ReviewController {
     }
 
     @GetMapping("/reviews/review-list")
+
     public String getReviewList(Model model){
+        if (!userSession.isLoggedIn()){
+            return "redirect:/login";
+        }
         List<Review> reviews = reviewService.findAllReviews();
         model.addAttribute("reviews", reviews);
-        return "/reviews/review-list";
+        return "reviews/review-list";
     }
 
 

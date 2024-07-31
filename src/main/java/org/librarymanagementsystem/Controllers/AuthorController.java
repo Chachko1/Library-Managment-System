@@ -2,6 +2,7 @@ package org.librarymanagementsystem.Controllers;
 
 import jakarta.validation.Valid;
 import org.librarymanagementsystem.DTOs.AuthorDTO;
+import org.librarymanagementsystem.config.UserSession;
 import org.librarymanagementsystem.services.AuthorService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -18,18 +19,29 @@ public class AuthorController {
     @Autowired
     private AuthorService authorService;
 
+    @Autowired
+    private UserSession userSession;
+
     @GetMapping
     public String listAuthors(Model model){
+        if (!userSession.isLoggedIn()){
+             return "redirect:/login";
+        }
         List<AuthorDTO> authors=authorService.getAllAuthors();
         model.addAttribute("authors",authors);
-        return "authors/list";
+        return "/authors/list";
+
+
 
     }
 
     @GetMapping("/new")
     public String showAuthorForm(Model model){
+        if (!userSession.isLoggedIn()){
+            return "redirect:/login";
+        }
         model.addAttribute("author",new AuthorDTO() );
-        return "authors/form";
+        return "/authors/form";
 
     }
 

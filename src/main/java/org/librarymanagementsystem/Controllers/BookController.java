@@ -3,6 +3,7 @@ package org.librarymanagementsystem.Controllers;
 import jakarta.validation.Valid;
 import org.librarymanagementsystem.DTOs.AuthorDTO;
 import org.librarymanagementsystem.DTOs.BookDTO;
+import org.librarymanagementsystem.config.UserSession;
 import org.librarymanagementsystem.models.Author;
 import org.librarymanagementsystem.services.AuthorService;
 import org.librarymanagementsystem.services.BookService;
@@ -24,8 +25,14 @@ public class BookController {
     @Autowired
     private AuthorService authorService;
 
+    @Autowired
+    private UserSession userSession;
+
     @GetMapping
     public String listBooks(Model model){
+        if (!userSession.isLoggedIn()){
+            return "redirect:/login";
+        }
         List<BookDTO> books = bookService.getAllBooks();
         model.addAttribute("books",books);
 
@@ -37,6 +44,9 @@ public class BookController {
 
     @GetMapping("/new")
     public String showBookForm(Model model){
+        if (!userSession.isLoggedIn()){
+            return "redirect:/login";
+        }
         model.addAttribute("book", new BookDTO());
 
         List<AuthorDTO> authors = authorService.getAllAuthors();

@@ -40,6 +40,9 @@ public class BorrowedRecordController {
 
     @GetMapping("/borrowed-records-list")
     public String getBorrowedRecordsList(Model model) {
+        if (!userSession.isLoggedIn()){
+            return "redirect:/login";
+        }
         List<BorrowRecord> borrowRecords = borrowRecordService.findAllBorrowRecords();
         model.addAttribute("borrowRecords", borrowRecords);
         return "borrowedRecords/borrowed-records-list";
@@ -47,6 +50,9 @@ public class BorrowedRecordController {
 
     @GetMapping("/borrowed-records-form")
     public String getBorrowedRecordsForm(Model model) {
+        if (!userSession.isLoggedIn()){
+            return "redirect:/login";
+        }
         model.addAttribute("borrowRecord", new BorrowRecord());
         List<Book> books = bookService.findAllBooks();
         model.addAttribute("books", books);

@@ -30,8 +30,9 @@
           <div th:if="${#fields.hasErrors('password')}" class="text-red-600 mt-1"><small th:errors="*{password}"></small></div>
         </div>
         <div th:if="${session.loginError}" class="text-red-600 mb-4"><small th:text="${session.loginError}"></small></div>
-        <div>
+        <div class="flex gap-8">
           <button type="submit" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-5 rounded-lg duration-300 text-lg">Sign In</button>
+          <a  href="#" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-5 rounded-lg duration-300 text-lg py-3" th:href="@{/register}">Sign Up</a>
         </div>
       </form>
     </div>
