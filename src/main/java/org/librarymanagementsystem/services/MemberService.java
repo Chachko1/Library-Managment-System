@@ -1,6 +1,8 @@
 package org.librarymanagementsystem.services;
 
+import org.librarymanagementsystem.DTOs.LoginDTO;
 import org.librarymanagementsystem.DTOs.MemberDTO;
+import org.librarymanagementsystem.config.UserSession;
 import org.librarymanagementsystem.mappers.MemberMapper;
 import org.librarymanagementsystem.models.Member;
 import org.librarymanagementsystem.repositories.MemberRepository;
@@ -17,6 +19,12 @@ public class MemberService {
 
     @Autowired
     private MemberRepository memberRepository;
+    @Autowired
+    private final UserSession userSession;
+
+    public MemberService(UserSession userSession) {
+        this.userSession = userSession;
+    }
 
     public List<MemberDTO> getAllMembers(){
         return memberRepository.findAll().stream().map(memberMapper::toDTO).collect(Collectors.toList());
@@ -31,4 +39,25 @@ public class MemberService {
         memberRepository.deleteById(id);
     }
 
+    public boolean existsByUsername(String username){
+        return memberRepository.existsByUsername(username);
+    }
+
+    public boolean validateUser(LoginDTO loginDTO) {
+        Member member=memberRepository.findByUsername(loginDTO.getUsername());
+        if (member!=null&&member.getPassword().equals(loginDTO.getPassword())){
+            userSession.login(member.getId(),loginDTO.getUsername());
+            return true;
+        }
+        return false;
+    }
+
+    public Member getMemberByUsername(String username) {
+       return memberRepository.findByUsername(username);
+
+    }
+
+    public Member findMemberById(long id) {
+        return memberRepository.findById(id).orElse(null);
+    }
 }

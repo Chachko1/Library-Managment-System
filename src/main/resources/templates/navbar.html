@@ -3,46 +3,43 @@
 <head>
     <meta charset="UTF-8">
     <title>Navbar</title>
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700&display=swap" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+        }
+    </style>
 </head>
 <body>
 <div th:fragment="navbar">
-<nav class="navbar navbar-expand-lg navbar-light bg-light">
-    <div class="container">
-        <a class="navbar-brand" href="#">Library Management</a>
-        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-            <span class="navbar-toggler-icon"></span>
-        </button>
-        <div class="collapse navbar-collapse" id="navbarNav">
-            <ul class="navbar-nav">
-                <li class="nav-item">
-                    <a class="nav-link active" aria-current="page" href="#" th:href="@{/}">Home</a>
-                </li>
-                <li class="nav-item" th:if="${@userSession.isLoggedIn()}">
-                    <a class="nav-link" href="#" th:href="@{/books}">Books</a>
-                </li>
-                <li class="nav-item" th:if="${@userSession.isLoggedIn()}">
-                    <a class="nav-link" href="#" th:href="@{/authors}">Authors</a>
-                </li>
-                <li class="nav-item" th:if="${@userSession.isLoggedIn()}">
-                    <a class="nav-link" href="#" th:href="@{/reviews} ">Reviews</a>
-                </li>
-                <li class="nav-item" th:unless="${@userSession.isLoggedIn()}">
-                    <a class="nav-link" href="#" th:href="@{/login}">Login</a>
-                </li>
-                <li class="nav-item" th:unless="${@userSession.isLoggedIn()}">
-                    <a class="nav-link" href="#" th:href="@{/register}">Register</a>
-                </li>
-                <li class="nav-item" th:if="${@userSession.isLoggedIn()}">
-                    <a class="nav-link" href="#" th:href="@{/logout}">Logout</a>
-                </li>
-
-
-            </ul>
+    <nav class="bg-gray-800 p-4">
+        <div class="container mx-auto flex justify-between items-center px-4">
+            <a class="text-white text-lg font-bold text-2xl transform transition-transform duration-300 hover:scale-105" href="#" th:href="@{/}">Library Management</a>
+            <button class="text-gray-300 hover:text-white focus:outline-none lg:hidden" id="navbar-toggle">
+                <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path>
+                </svg>
+            </button>
+            <div class="hidden lg:flex lg:items-center lg:space-x-4 gap-5 text-lg" id="navbar-menu">
+                <a class="text-gray-300 hover:text-white p-1 transform transition-transform duration-300 hover:scale-110" href="#" th:href="@{/}">Home</a>
+                <a class="text-gray-300 hover:text-white p-1 transform transition-transform duration-300 hover:scale-110" href="#" th:href="@{/books}" th:if="${@userSession.isLoggedIn()}">Books</a>
+                <a class="text-gray-300 hover:text-white p-1 transform transition-transform duration-300 hover:scale-110" href="#" th:href="@{/authors}" th:if="${@userSession.isLoggedIn()}">Authors</a>
+                <a class="text-gray-300 hover:text-white p-1 transform transition-transform duration-300 hover:scale-110" href="#" th:href="@{/reviews/review-list}" th:if="${@userSession.isLoggedIn()}">Reviews</a>
+                <a class="text-gray-300 hover:text-white p-1 transform transition-transform duration-300 hover:scale-110" href="#" th:href="@{/borrowedRecords/borrowed-records-list}" th:if="${@userSession.isLoggedIn()}">Borrowed Records</a>
+                <a class="text-gray-300 hover:text-white p-1 transform transition-transform duration-300 hover:scale-110" href="#" th:href="@{/login}" th:unless="${@userSession.isLoggedIn()}">Login</a>
+                <a class="text-gray-300 hover:text-white p-1 transform transition-transform duration-300 hover:scale-110" href="#" th:href="@{/register}" th:unless="${@userSession.isLoggedIn()}">Register</a>
+                <a class="text-gray-300 hover:text-white p-1 transform transition-transform duration-300 hover:scale-110" href="#" th:href="@{/logout}" th:if="${@userSession.isLoggedIn()}">Logout</a>
+            </div>
         </div>
-    </div>
-</nav>
+    </nav>
 </div>
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+
+<script>
+    document.getElementById('navbar-toggle').addEventListener('click', function () {
+        var menu = document.getElementById('navbar-menu');
+        menu.classList.toggle('hidden');
+    });
+</script>
 </body>
 </html>

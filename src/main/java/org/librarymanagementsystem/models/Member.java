@@ -15,9 +15,9 @@ public class Member {
     private String username;
     @NotBlank
     private String password;
-    @OneToMany(mappedBy = "member",cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "member",cascade = CascadeType.ALL,fetch = FetchType.EAGER)
     private List<BorrowRecord> borrowRecords;
-    @OneToMany(mappedBy = "member",cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "member",cascade = CascadeType.ALL,fetch = FetchType.EAGER)
     private List<Review> reviews;
 
     public Member() {

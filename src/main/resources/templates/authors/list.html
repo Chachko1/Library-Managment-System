@@ -1,33 +1,47 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>Authors</title>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+
+    <!-- Import Inter Font -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700&display=swap" rel="stylesheet">
+    <!-- Tailwind CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <style>
+        /* Apply Inter font to the whole document */
+        body {
+            font-family: 'Inter', sans-serif;
+        }
+    </style>
 </head>
-<body>
-<div class="container mt-5">
-    <h1 class="mb-4">Authors</h1>
-    <table class="table table-striped">
+<body class="" style="background-color: #003366">
+<div th:replace="navbar::navbar"></div>
+<div class="container mx-auto mt-10 p-6 bg-white shadow-md rounded">
+    <h1 class="text-3xl font-bold mb-6">Authors</h1>
+    <table class="min-w-full divide-y divide-gray-400">
         <thead>
         <tr>
-            <th scope="col">Name</th>
-            <th scope="col">Actions</th>
+            <th class="px-6 py-3 text-left text-xs font-medium  uppercase tracking-wider text-xl font-bold">Name</th>
+            <th class="px-6 py-3 text-left text-xs font-medium  uppercase tracking-wider text-xl font-bold">Actions</th>
         </tr>
         </thead>
-        <tbody>
+        <tbody class="bg-white divide-y divide-gray-400 text-xl ">
         <tr th:each="author : ${authors}">
-            <td th:text="${author.name}">Name</td>
-            <td>
-                <a th:href="@{/authors/delete/{id}(id=${author.id})}" class="btn btn-danger btn-sm">Delete</a>
+            <td class="px-6 py-4 whitespace-nowrap" th:text="${author.name}">Name</td>
+            <td class="px-6 py-4 whitespace-nowrap">
+                <a th:href="@{/authors/delete/{id}(id=${author.id})}" class="bg-red-500 hover:bg-red-700 text-white font-bold py-1 text-lg px-5 rounded-lg duration-300">Delete</a>
             </td>
         </tr>
         </tbody>
     </table>
-    <a th:href="@{/authors/new}" class="btn btn-primary">Add New Author</a>
+    <a th:href="@{/authors/new}" class="mt-4 inline-block bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-5 rounded-lg duration-300 text-lg ">Add New Author</a>
 </div>
-
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+<footer class="py-4 mt-10">
+    <div class="container mx-auto text-center p-5">
+        <p class="text-gray-200">&copy; 2024 Library Management System. All rights reserved.</p>
+    </div>
+</footer>
 </body>
 </html>

@@ -20,6 +20,9 @@ public class Book {
     @NotBlank
     private String isbn;
 
+    @Column(name = "is_borrowed") // Added field to track if the book is borrowed
+    private boolean isBorrowed;
+
 
     public Book() {
     }
@@ -29,6 +32,15 @@ public class Book {
         this.title = title;
         this.author = author;
         this.isbn = isbn;
+        this.isBorrowed = false;
+    }
+
+    public boolean isBorrowed() {
+        return isBorrowed;
+    }
+
+    public void setBorrowed(boolean borrowed) {
+        isBorrowed = borrowed;
     }
 
     public long getId() {

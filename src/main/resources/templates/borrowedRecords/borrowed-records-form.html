@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<head>
+  <title>Borrowed Record Form</title>
+</head>
+<body>
+<h1>Add New Borrowed Record</h1>
+<form th:action="@{/borrowedRecords/borrowed-records-form}" th:object="${borrowRecord}" method="post">
+  <div>
+    <label for="bookTitle">Book:</label>
+    <select id="bookTitle" name="bookTitle">
+      <option th:each="book : ${books}" th:value="${book.title}" th:text="${book.title}">Book Title</option>
+    </select>
+  </div>
+  <div>
+    <label for="borrowedDate">Start Date:</label>
+    <input type="date" id="borrowedDate" name="borrowedDate" th:field="*{borrowedDate}">
+  </div>
+  <div>
+    <label for="returnedDate">End Date:</label>
+    <input type="date" id="returnedDate" name="returnedDate" th:field="*{returnedDate}">
+  </div>
+  <!-- Added section for error message -->
+  <div th:if="${errorMessage}">
+    <p th:text="${errorMessage}" style="color: red;"></p>
+  </div>
+  <div>
+    <button type="submit">Submit</button>
+  </div>
+</form>
+</body>
+</html>

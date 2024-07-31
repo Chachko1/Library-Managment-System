@@ -2,31 +2,24 @@ package org.librarymanagementsystem.DTOs;
 
 public class ReviewDTO {
 
-    private long id;
 
     private String content;
 
     private MemberDTO member;
 
-    private BookDTO book;
+    private Long bookId;
 
-    public ReviewDTO(long id, String content, MemberDTO member, BookDTO book) {
-        this.id = id;
+    public ReviewDTO(String content, MemberDTO member, Long bookId) {
+
         this.content = content;
         this.member = member;
-        this.book = book;
+        this.bookId = bookId;
     }
 
     public ReviewDTO() {
     }
 
-    public long getId() {
-        return id;
-    }
 
-    public void setId(long id) {
-        this.id = id;
-    }
 
     public String getContent() {
         return content;
@@ -44,11 +37,11 @@ public class ReviewDTO {
         this.member = member;
     }
 
-    public BookDTO getBook() {
-        return book;
+    public Long getBookId() {
+        return bookId;
     }
 
-    public void setBook(BookDTO book) {
-        this.book = book;
+    public void setBookId(Long bookId) {
+        this.bookId = bookId;
     }
 }

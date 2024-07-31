@@ -5,11 +5,14 @@ import org.librarymanagementsystem.DTOs.BookDTO;
 import org.librarymanagementsystem.mappers.BookMapper;
 import org.librarymanagementsystem.models.Author;
 import org.librarymanagementsystem.models.Book;
+import org.librarymanagementsystem.models.BorrowRecord;
 import org.librarymanagementsystem.repositories.AuthorRepository;
 import org.librarymanagementsystem.repositories.BookRepository;
+import org.librarymanagementsystem.repositories.BorrowRecordRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDate;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -21,6 +24,8 @@ public class BookService {
 
     @Autowired
     private AuthorRepository authorRepository;
+    @Autowired
+    private BorrowRecordRepository borrowRecordRepository;
 
     @Autowired
     private BookMapper bookMapper;
@@ -41,11 +46,44 @@ public class BookService {
         if (bookDTO.getAuthorId() != null) {
             Author author = authorRepository.findById(bookDTO.getAuthorId()).orElseThrow(() -> new RuntimeException("Author not found"));
             book.setAuthor(author);
+            book.setBorrowed(false);
         }
         return bookMapper.toDTO(bookRepository.save(book));
     }
 
     public void deleteBook(Long id){
         bookRepository.deleteById(id);
+    }
+
+    public Book findBookByTitle(String title) {
+        return bookRepository.findByTitle(title);
+    }
+
+    public List<Book> findAllBooks() {
+        return bookRepository.findAll();
+    }
+
+    public Book findBookById(Long id) {
+        return bookRepository.findById(id).orElse(null);
+    }
+
+    public LocalDate findNextAvailableDate(Long bookId) {
+        List<BorrowRecord> borrowRecords = borrowRecordRepository.findByBookId(bookId);
+        LocalDate latestReturnDate = LocalDate.now();
+        for (BorrowRecord record : borrowRecords) {
+            if (record.getReturnedDate().isAfter(latestReturnDate)) {
+                latestReturnDate = record.getReturnedDate();
+            }
+        }
+        return latestReturnDate.plusDays(1);
+    }
+
+    // Added method to update the borrowed status of a book
+    public void updateBookBorrowedStatus(Long bookId, boolean status) {
+        Book book = findBookById(bookId);
+        if (book != null) {
+            book.setBorrowed(status);
+            bookRepository.save(book);
+        }
     }
 }

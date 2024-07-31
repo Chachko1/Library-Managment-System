@@ -1,7 +1,16 @@
 package org.librarymanagementsystem.Controllers;
 
 import jakarta.validation.Valid;
+import org.librarymanagementsystem.DTOs.BookDTO;
+import org.librarymanagementsystem.DTOs.MemberDTO;
 import org.librarymanagementsystem.DTOs.ReviewDTO;
+
+import org.librarymanagementsystem.config.UserSession;
+import org.librarymanagementsystem.mappers.BookMapper;
+import org.librarymanagementsystem.mappers.MemberMapper;
+import org.librarymanagementsystem.models.Book;
+import org.librarymanagementsystem.models.Member;
+import org.librarymanagementsystem.models.Review;
 import org.librarymanagementsystem.services.BookService;
 import org.librarymanagementsystem.services.MemberService;
 import org.librarymanagementsystem.services.ReviewService;
@@ -14,58 +23,58 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @Controller
-@RequestMapping("/reviews")
 public class ReviewController {
-
     @Autowired
-     private ReviewService reviewService;
-
-    @Autowired
-    private MemberService memberService;
+    private ReviewService reviewService;
 
     @Autowired
     private BookService bookService;
 
+    @Autowired
+    private MemberService userService;
 
-
-    @GetMapping
-    public String getReviewsList(Model model){
-        List<ReviewDTO> reviews=reviewService.getAllReviews();
-        model.addAttribute("reviews",reviews);
-
-        return "reviews/list";
-
+    @Autowired
+    private UserSession userSession;
+    @GetMapping("/review-form")
+    public String getReviewForm(Model model){
+        model.addAttribute("review", new Review());
+        List<Book> books = bookService.findAllBooks();
+        model.addAttribute("books", books);
+        return ("/reviews/review-form");
     }
 
-    @GetMapping("/new")
-    public String showReviewForm(Model model){
-        model.addAttribute("review",new ReviewDTO());
-        model.addAttribute("members", memberService.getAllMembers());
-        model.addAttribute("books", bookService.getAllBooks());
-        return "reviews/form";
-
-
+    @GetMapping("/reviews/review-list")
+    public String getReviewList(Model model){
+        List<Review> reviews = reviewService.findAllReviews();
+        model.addAttribute("reviews", reviews);
+        return "/reviews/review-list";
     }
 
-    @PostMapping
-    public String saveReview(@Valid @ModelAttribute ReviewDTO reviewDTO , BindingResult bindingResult){
-        if (bindingResult.hasErrors()){
-            return "redirect:/reviews/form";
+
+    @PostMapping("/reviews/review-form")
+    public String saveReview(@ModelAttribute("review") Review review,
+                             BindingResult result,
+                             @RequestParam("bookTitle") String bookTitle) {
+        if (result.hasErrors()) {
+            return "reviews/review-form";
         }
-        reviewService.saveReview(reviewDTO);
-        return "redirect:/reviews";
 
+        Member member = userService.findMemberById(userSession.getId());
+        Book book = bookService.findBookByTitle(bookTitle);
+
+        review.setMember(member);
+        review.setBook(book);
+
+        reviewService.saveReview(review);
+
+        return "redirect:/reviews/review-list";
     }
 
-    @GetMapping("/delete/{id}")
-    public String deleteReview(@PathVariable("id") Long id){
-        reviewService.deleteReview(id);
 
-        return "redirect:/reviews";
-
+    @PostMapping("/review-list/delete/{id}")
+    public String deleteReview(@PathVariable("id") Long id) {
+        reviewService.deleteReviewById(id);
+        return "redirect:/reviews/review-list";
     }
-
-
-
-
 }
+

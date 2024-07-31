@@ -30,7 +30,7 @@ public class MemberController {
     public String showMemberForm(Model model){
         model.addAttribute("member",new MemberDTO());
 
-        return "members/form";
+        return "register";
 
     }
 
