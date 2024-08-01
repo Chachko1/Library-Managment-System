@@ -14,6 +14,8 @@ import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
 import java.util.List;
+import java.util.Optional;
+import java.util.Random;
 import java.util.stream.Collectors;
 
 @Service
@@ -85,5 +87,15 @@ public class BookService {
             book.setBorrowed(status);
             bookRepository.save(book);
         }
+    }
+
+    public Optional<Book> getRandomBook() {
+        long count = bookRepository.count();
+        if (count == 0) {
+            // No books in the repository
+            return Optional.empty();
+        }
+        int index = new Random().nextInt((int) count);
+        return Optional.ofNullable(bookRepository.findAll().get(index));
     }
 }

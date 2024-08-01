@@ -14,15 +14,26 @@ public class MemberDTO {
 
     private List<ReviewDTO> reviews;
 
+    private boolean recommendedBook;
+
     public MemberDTO() {
     }
 
-    public MemberDTO(long id, String username, String password) {
+    public MemberDTO(long id, String username, String password, List<BorrowRecordDTO> borrowRecords, List<ReviewDTO> reviews) {
         this.id = id;
         this.username = username;
         this.password = password;
-        this.borrowRecords=new ArrayList<>();
-        this.reviews=new ArrayList<>();
+        this.borrowRecords = borrowRecords;
+        this.reviews = reviews;
+        this.recommendedBook = false;
+    }
+
+    public boolean isRecommendedBook() {
+        return recommendedBook;
+    }
+
+    public void setRecommendedBook(boolean recommendedBook) {
+        this.recommendedBook = recommendedBook;
     }
 
     public long getId() {

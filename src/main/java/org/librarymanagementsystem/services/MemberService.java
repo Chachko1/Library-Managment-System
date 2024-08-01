@@ -22,6 +22,8 @@ public class MemberService {
     @Autowired
     private final UserSession userSession;
 
+
+
     public MemberService(UserSession userSession) {
         this.userSession = userSession;
     }
@@ -59,5 +61,18 @@ public class MemberService {
 
     public Member findMemberById(long id) {
         return memberRepository.findById(id).orElse(null);
+    }
+
+    public void resetLoginStatus() {
+        memberRepository.findAll().forEach(member-> {
+            member.setRecommendedBook(false);
+            memberRepository.save(member);
+        });
+
+    }
+
+    public void updateBookStatus(Member member) {
+        member.setRecommendedBook(true);
+        memberRepository.save(member);
     }
 }

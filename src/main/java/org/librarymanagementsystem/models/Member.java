@@ -20,6 +20,13 @@ public class Member {
     @OneToMany(mappedBy = "member",cascade = CascadeType.ALL,fetch = FetchType.EAGER)
     private List<Review> reviews;
 
+    @Column(nullable = false)
+    private boolean recommendedBook;
+
+    public boolean isRecommendedBook() {
+        return recommendedBook;
+    }
+
     public Member() {
     }
 
@@ -29,6 +36,7 @@ public class Member {
         this.password = password;
         this.borrowRecords=new ArrayList<>();
         this.reviews=new ArrayList<>();
+        this.setRecommendedBook(false);
     }
 
     public long getId() {
@@ -69,5 +77,9 @@ public class Member {
 
     public void setReviews(List<Review> reviews) {
         this.reviews = reviews;
+    }
+
+    public void setRecommendedBook(boolean isRecommended) {
+        this.recommendedBook=isRecommended;
     }
 }
