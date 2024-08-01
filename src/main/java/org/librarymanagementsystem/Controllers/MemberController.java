@@ -3,6 +3,7 @@ package org.librarymanagementsystem.Controllers;
 import jakarta.validation.Valid;
 import org.librarymanagementsystem.DTOs.MemberDTO;
 import org.librarymanagementsystem.config.UserSession;
+import org.librarymanagementsystem.models.Member;
 import org.librarymanagementsystem.services.MemberService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -18,12 +19,12 @@ public class MemberController {
 
     @Autowired
     private MemberService memberService;
-    @Autowired
-    private UserSession userSession;
+
 
     @GetMapping
     public String getAllListMembers(Model model){
-        if (!userSession.isLoggedIn()){
+        Member currentMember=memberService.getCurrentMember();
+        if (currentMember==null){
             return "redirect:/login";
         }
         List<MemberDTO> members=memberService.getAllMembers();
@@ -34,7 +35,8 @@ public class MemberController {
 
     @GetMapping("/new")
     public String showMemberForm(Model model){
-        if (!userSession.isLoggedIn()){
+        Member currentMember=memberService.getCurrentMember();
+        if (currentMember==null){
             return "redirect:/login";
         }
         model.addAttribute("member",new MemberDTO());

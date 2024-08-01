@@ -7,6 +7,8 @@ import org.librarymanagementsystem.mappers.MemberMapper;
 import org.librarymanagementsystem.models.Member;
 import org.librarymanagementsystem.repositories.MemberRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -57,6 +59,16 @@ public class MemberService {
     public Member getMemberByUsername(String username) {
        return memberRepository.findByUsername(username);
 
+    }
+
+    public Member getCurrentMember() {
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        String username = authentication.getName();
+        return findByUsername(username);
+    }
+
+    private Member findByUsername(String username) {
+        return memberRepository.findByUsername(username);
     }
 
     public Member findMemberById(long id) {

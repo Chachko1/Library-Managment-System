@@ -35,12 +35,12 @@ public class BorrowedRecordController {
     @Autowired
     private MemberService memberService;
 
-    @Autowired
-    private UserSession userSession;
+
 
     @GetMapping("/borrowed-records-list")
     public String getBorrowedRecordsList(Model model) {
-        if (!userSession.isLoggedIn()){
+        Member currentMember=memberService.getCurrentMember();
+        if (currentMember==null){
             return "redirect:/login";
         }
         List<BorrowRecord> borrowRecords = borrowRecordService.findAllBorrowRecords();
@@ -50,7 +50,8 @@ public class BorrowedRecordController {
 
     @GetMapping("/borrowed-records-form")
     public String getBorrowedRecordsForm(Model model) {
-        if (!userSession.isLoggedIn()){
+        Member currentMember=memberService.getCurrentMember();
+        if (currentMember==null){
             return "redirect:/login";
         }
         model.addAttribute("borrowRecord", new BorrowRecord());
@@ -70,7 +71,7 @@ public class BorrowedRecordController {
             return "borrowedRecords/borrowed-records-form";
         }
 
-        Member member = memberService.findMemberById(userSession.getId());
+        Member member = memberService.findMemberById(memberService.getCurrentMember().getId());
         Book book = bookService.findBookByTitle(bookTitle);
 
         BorrowRecord borrowRecord1 = new BorrowRecord();

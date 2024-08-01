@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 <head>
     <meta charset="UTF-8">
     <title th:text="#{navbar.title}">Navbar</title>
@@ -23,13 +23,13 @@
             </button>
             <div class="hidden lg:flex lg:items-center lg:space-x-4 gap-5 text-lg" id="navbar-menu">
                 <a class="text-gray-300 hover:text-white p-1 transform transition-transform duration-300 hover:scale-110" href="#" th:href="@{/}" th:text="#{navbar.home}">Home</a>
-                <a class="text-gray-300 hover:text-white p-1 transform transition-transform duration-300 hover:scale-110" href="#" th:href="@{/books}" th:if="${@userSession.isLoggedIn()}" th:text="#{navbar.books}">Books</a>
-                <a class="text-gray-300 hover:text-white p-1 transform transition-transform duration-300 hover:scale-110" href="#" th:href="@{/authors}" th:if="${@userSession.isLoggedIn()}" th:text="#{navbar.authors}">Authors</a>
-                <a class="text-gray-300 hover:text-white p-1 transform transition-transform duration-300 hover:scale-110" href="#" th:href="@{/reviews/review-list}" th:if="${@userSession.isLoggedIn()}" th:text="#{navbar.reviews}">Reviews</a>
-                <a class="text-gray-300 hover:text-white p-1 transform transition-transform duration-300 hover:scale-110" href="#" th:href="@{/borrowedRecords/borrowed-records-list}" th:if="${@userSession.isLoggedIn()}" th:text="#{navbar.borrowedRecords}">Borrowed Records</a>
-                <a class="text-gray-300 hover:text-white p-1 transform transition-transform duration-300 hover:scale-110" href="#" th:href="@{/login}" th:unless="${@userSession.isLoggedIn()}" th:text="#{navbar.login}">Login</a>
-                <a class="text-gray-300 hover:text-white p-1 transform transition-transform duration-300 hover:scale-110" href="#" th:href="@{/register}" th:unless="${@userSession.isLoggedIn()}" th:text="#{navbar.register}">Register</a>
-                <a class="text-gray-300 hover:text-white p-1 transform transition-transform duration-300 hover:scale-110" href="#" th:href="@{/logout}" th:if="${@userSession.isLoggedIn()}" th:text="#{navbar.logout}">Logout</a>
+                <a class="text-gray-300 hover:text-white p-1 transform transition-transform duration-300 hover:scale-110" href="#" th:href="@{/books}" sec:authorize="isAuthenticated()" th:text="#{navbar.books}">Books</a>
+                <a class="text-gray-300 hover:text-white p-1 transform transition-transform duration-300 hover:scale-110" href="#" th:href="@{/authors}" sec:authorize="isAuthenticated()" th:text="#{navbar.authors}">Authors</a>
+                <a class="text-gray-300 hover:text-white p-1 transform transition-transform duration-300 hover:scale-110" href="#" th:href="@{/reviews/review-list}" sec:authorize="isAuthenticated()" th:text="#{navbar.reviews}">Reviews</a>
+                <a class="text-gray-300 hover:text-white p-1 transform transition-transform duration-300 hover:scale-110" href="#" th:href="@{/borrowedRecords/borrowed-records-list}" sec:authorize="isAuthenticated()" th:text="#{navbar.borrowedRecords}">Borrowed Records</a>
+                <a class="text-gray-300 hover:text-white p-1 transform transition-transform duration-300 hover:scale-110" href="#" th:href="@{/login}" sec:authorize="!isAuthenticated()" th:text="#{navbar.login}">Login</a>
+                <a class="text-gray-300 hover:text-white p-1 transform transition-transform duration-300 hover:scale-110" href="#" th:href="@{/register}" sec:authorize="!isAuthenticated()" th:text="#{navbar.register}">Register</a>
+                <a class="text-gray-300 hover:text-white p-1 transform transition-transform duration-300 hover:scale-110" href="#" th:href="@{/logout}" sec:authorize="isAuthenticated()" th:text="#{navbar.logout}"><form th:action="@{/logout}" th:method="post"><button type="submit" > Logout</button></form></a>
 
                 <!-- Language Selection -->
                 <form th:method="get" class="language-form gap-4" style="display: flex; align-items: center; padding: 0.15rem;">

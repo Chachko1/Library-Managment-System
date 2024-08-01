@@ -5,8 +5,10 @@ import org.librarymanagementsystem.DTOs.AuthorDTO;
 import org.librarymanagementsystem.DTOs.BookDTO;
 import org.librarymanagementsystem.config.UserSession;
 import org.librarymanagementsystem.models.Author;
+import org.librarymanagementsystem.models.Member;
 import org.librarymanagementsystem.services.AuthorService;
 import org.librarymanagementsystem.services.BookService;
+import org.librarymanagementsystem.services.MemberService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -26,11 +28,12 @@ public class BookController {
     private AuthorService authorService;
 
     @Autowired
-    private UserSession userSession;
+    private MemberService memberService;
 
     @GetMapping
     public String listBooks(Model model){
-        if (!userSession.isLoggedIn()){
+        Member currentMember=memberService.getCurrentMember();
+        if (currentMember==null){
             return "redirect:/login";
         }
         List<BookDTO> books = bookService.getAllBooks();
@@ -44,7 +47,8 @@ public class BookController {
 
     @GetMapping("/new")
     public String showBookForm(Model model){
-        if (!userSession.isLoggedIn()){
+        Member currentMember=memberService.getCurrentMember();
+        if (currentMember==null){
             return "redirect:/login";
         }
         model.addAttribute("book", new BookDTO());

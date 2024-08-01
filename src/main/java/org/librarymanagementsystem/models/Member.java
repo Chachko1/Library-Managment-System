@@ -22,9 +22,19 @@ public class Member {
 
     @Column(nullable = false)
     private boolean recommendedBook;
+    @OneToMany(mappedBy = "rolesAddedBy",cascade = CascadeType.ALL,fetch = FetchType.EAGER)
+    private List<Role> roles;
 
     public boolean isRecommendedBook() {
         return recommendedBook;
+    }
+
+    public List<Role> getRoles() {
+        return roles;
+    }
+
+    public void setRoles(List<Role> roles) {
+        this.roles = roles;
     }
 
     public Member() {

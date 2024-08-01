@@ -22,21 +22,21 @@ import java.util.Optional;
 @Controller
 public class HomeController {
     private final MemberService memberService;
-    private final UserSession userSession;
+
     private final BookService bookService;
 
 
-    public HomeController(MemberService memberService, UserSession userSession, BookService bookService) {
+    public HomeController(MemberService memberService, BookService bookService) {
         this.memberService = memberService;
-        this.userSession = userSession;
+
         this.bookService = bookService;
     }
 
     @GetMapping("/")
     public String showHomePage(Model model){
-
-        if (userSession.isLoggedIn()){
-            Member member=memberService.getMemberByUsername(userSession.getUsername());
+        Member currentMember=memberService.getCurrentMember();
+        if (memberService.getCurrentMember()==null){
+            Member member=memberService.getMemberByUsername(memberService.getCurrentMember().getUsername());
             String message="Add Books so we can recommend you every day a book!";
 
             if (!member.isRecommendedBook()){
@@ -87,37 +87,6 @@ public class HomeController {
 
 
         return "redirect:/login";
-    }
-
-    @PostMapping("/login")
-    public String completeLogin(@Valid LoginDTO loginDTO, BindingResult bindingResult, RedirectAttributes redirectAttributes ,HttpSession session){
-        if (!memberService.validateUser(loginDTO)){
-            bindingResult.reject("loginError","Invalid Username or password");
-            session.setAttribute("loginError" ,"invalid Username or Password");
-
-        }else {
-            session.removeAttribute("loginError");
-        }
-        if (bindingResult.hasErrors()){
-
-            redirectAttributes.addFlashAttribute("loginData",loginDTO);
-            redirectAttributes.addFlashAttribute("org.springframework.validation.BindingResult.loginData",bindingResult);
-
-            return "redirect:/login";
-        }
-
-
-        return "redirect:/";
-
-    }
-
-    @GetMapping("/logout")
-    public String logout(){
-        if (!userSession.isLoggedIn()){
-            return "redirect:/";
-        }
-        userSession.logout();
-        return "redirect:/";
     }
 
 

@@ -31,14 +31,14 @@ public class ReviewController {
     private BookService bookService;
 
     @Autowired
-    private MemberService userService;
+    private MemberService memberService;
 
-    @Autowired
-    private UserSession userSession;
+
     @GetMapping("/review-form")
 
     public String getReviewForm(Model model){
-        if (!userSession.isLoggedIn()){
+        Member currentMember=memberService.getCurrentMember();
+        if (currentMember==null){
             return "redirect:/login";
         }
         model.addAttribute("review", new Review());
@@ -50,7 +50,8 @@ public class ReviewController {
     @GetMapping("/reviews/review-list")
 
     public String getReviewList(Model model){
-        if (!userSession.isLoggedIn()){
+        Member currentMember=memberService.getCurrentMember();
+        if (currentMember==null){
             return "redirect:/login";
         }
         List<Review> reviews = reviewService.findAllReviews();
@@ -67,7 +68,7 @@ public class ReviewController {
             return "reviews/review-form";
         }
 
-        Member member = userService.findMemberById(userSession.getId());
+        Member member = memberService.findMemberById(memberService.getCurrentMember().getId());
         Book book = bookService.findBookByTitle(bookTitle);
 
         review.setMember(member);
