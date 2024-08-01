@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Spring Security Example</title>
+  <title th:text="#{form.title}">Sign in</title>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700&display=swap" rel="stylesheet">
   <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
   <style>
@@ -17,22 +17,22 @@
 <div class="container mx-auto mt-10 p-6 bg-white rounded shadow-md">
   <div class="flex justify-center">
     <div class="w-full max-w-md">
-      <h2 class="text-2xl font-bold mb-4">Sign in</h2>
+      <h2 class="text-2xl font-bold mb-4" th:text="#{form.title}">Sign in</h2>
       <form th:action="@{/login}" th:object="${loginData}" method="post">
         <div class="mb-4">
-          <label for="username" class="block text-gray-700 text-xl py-2">Username</label>
+          <label for="username" class="block text-gray-700 text-xl py-2" th:text="#{form.username}">Username</label>
           <input type="text" id="username" name="username" class=" text-lg mt-1 block w-full px-3 py-2 bg-white border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring focus:border-blue-300" required th:field="*{username}" />
           <div th:if="${#fields.hasErrors('username')}" class="text-red-600 mt-1"><small th:errors="*{username}"></small></div>
         </div>
         <div class="mb-4">
-          <label for="password" class="block text-gray-700 text-xl py-2">Password</label>
+          <label for="password" class="block text-gray-700 text-xl py-2" th:text="#{form.password}">Password</label>
           <input type="password" id="password" name="password" class=" text-lg mt-1 block w-full px-3 py-2 bg-white border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring focus:border-blue-300" required th:field="*{password}" />
           <div th:if="${#fields.hasErrors('password')}" class="text-red-600 mt-1"><small th:errors="*{password}"></small></div>
         </div>
         <div th:if="${session.loginError}" class="text-red-600 mb-4"><small th:text="${session.loginError}"></small></div>
         <div class="flex gap-8">
-          <button type="submit" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-5 rounded-lg duration-300 text-lg">Sign In</button>
-          <a  href="#" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-5 rounded-lg duration-300 text-lg py-3" th:href="@{/register}">Sign Up</a>
+          <button type="submit" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-5 rounded-lg duration-300 text-lg" th:text="#{form.login}">Sign In</button>
+          <a href="#" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-5 rounded-lg duration-300 text-lg py-3" th:href="@{/register}" th:text="#{form.register}">Sign Up</a>
         </div>
       </form>
     </div>
@@ -40,7 +40,7 @@
 </div>
 <footer class="py-4 mt-10">
   <div class="container mx-auto text-center p-5">
-    <p class="text-gray-200">&copy; 2024 Library Management System. All rights reserved.</p>
+    <p class="text-gray-200" th:text="#{form.footer}">&copy; 2024 Library Management System. All rights reserved.</p>
   </div>
 </footer>
 

@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org" lang="en">
 <head>
-    <title>Review Form</title>
+    <title th:text="#{reviewform.title}">Review Form</title>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700&display=swap" rel="stylesheet">
     <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
     <style>
@@ -13,31 +13,30 @@
         }
     </style>
 </head>
-<body class="" style="background-color: #003366">
+<body style="background-color: #003366">
 <div th:replace="navbar::navbar"></div>
 <div class="container mx-auto p-8 bg-white mt-10">
-    <h1 class="text-3xl font-bold mb-6">Review Form</h1>
-    <form action="#" th:action="@{/reviews/review-form}" th:object="${review}" method="post" class="bg-white p-6 rounded-lg ">
+    <h1 class="text-3xl font-bold mb-6" th:text="#{reviewform.title}">Review Form</h1>
+    <form th:action="@{/reviews/review-form}" th:object="${review}" method="post" class="bg-white p-6 rounded-lg">
         <div class="mb-4">
-            <label for="book" class="block text-gray-700 text-xl font-bold mb-2">Book:</label>
+            <label for="book" class="block text-gray-700 text-xl font-bold mb-2" th:text="#{reviewform.book}">Book:</label>
             <select id="book" name="bookTitle" class="custom-input shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline">
                 <option th:each="book : ${books}" th:value="${book.title}" th:text="${book.title}">Book Title</option>
             </select>
         </div>
         <div class="mb-4">
-            <label for="content" class="block text-gray-700  font-bold mb-2 text-xl">Review Content:</label>
+            <label for="content" class="block text-gray-700 font-bold mb-2 text-xl" th:text="#{reviewform.reviewContent}">Review Content:</label>
             <textarea id="content" th:field="*{content}" rows="4" class="custom-input shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" cols="50"></textarea>
         </div>
-
         <div class="flex gap-4">
-            <button type="submit" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-lg text-lg duration-300 focus:outline-none focus:shadow-outline">Submit Review</button>
-            <a th:href="@{/reviews/review-list}" class="bg-gray-500 hover:bg-gray-700 text-white font-bold py-2 px-4 text-lg rounded-lg duration-300 focus:outline-none focus:shadow-outline">Back to Reviews</a>
+            <button type="submit" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-lg text-lg duration-300 focus:outline-none focus:shadow-outline" th:text="#{reviewform.submit}">Submit Review</button>
+            <a th:href="@{/reviews/review-list}" class="bg-gray-500 hover:bg-gray-700 text-white font-bold py-2 px-4 text-lg rounded-lg duration-300 focus:outline-none focus:shadow-outline" th:text="#{reviewform.back}">Back to Reviews</a>
         </div>
     </form>
 </div>
 <footer class="py-4 mt-10">
     <div class="container mx-auto text-center p-5">
-        <p class="text-gray-200">&copy; 2024 Library Management System. All rights reserved.</p>
+        <p class="text-gray-200" th:text="#{footer.copy}">&copy; 2024 Library Management System. All rights reserved.</p>
     </div>
 </footer>
 </body>

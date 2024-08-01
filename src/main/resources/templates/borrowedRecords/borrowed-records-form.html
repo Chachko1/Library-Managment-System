@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Borrowed Record Form</title>
+  <title th:text="#{borrowedRecordForm.title}">Borrowed Record Form</title>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700&display=swap" rel="stylesheet">
   <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
   <style>
@@ -12,37 +12,37 @@
     }
   </style>
 </head>
+<body class="text-gray-900" style="background-color: #003366">
 <div th:replace="navbar::navbar"></div>
-<body class=" text-gray-900" style="background-color: #003366">
 <div class="container mx-auto mt-10 p-6 bg-white shadow-md rounded-lg">
-  <h1 class="text-3xl font-bold mb-6 text-center">Add New Borrowed Record</h1>
+  <h1 class="text-3xl font-bold mb-6 text-center" th:text="#{borrowedRecordForm.title}">Add New Borrowed Record</h1>
   <form th:action="@{/borrowedRecords/borrowed-records-form}" th:object="${borrowRecord}" method="post" class="space-y-4">
     <div>
-      <label for="bookTitle" class="block text-xl font-medium text-gray-700 font-bold">Book:</label>
+      <label for="bookTitle" class="block text-xl font-medium text-gray-700 font-bold" th:text="#{borrowedRecordForm.book}">Book:</label>
       <select id="bookTitle" name="bookTitle" class="mt-1 block w-full py-2 px-3 border border-gray-300 bg-white rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm">
         <option th:each="book : ${books}" th:value="${book.title}" th:text="${book.title}">Book Title</option>
       </select>
     </div>
     <div>
-      <label for="borrowedDate" class="block text-xl font-medium text-gray-700 font-bold">Start Date:</label>
+      <label for="borrowedDate" class="block text-xl font-medium text-gray-700 font-bold" th:text="#{borrowedRecordForm.startDate}">Start Date:</label>
       <input type="date" id="borrowedDate" name="borrowedDate" th:field="*{borrowedDate}" class="mt-1 block w-full py-2 px-3 border border-gray-300 bg-white rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm">
     </div>
     <div>
-      <label for="returnedDate" class="block text-xl font-medium text-gray-700 font-bold">End Date:</label>
+      <label for="returnedDate" class="block text-xl font-medium text-gray-700 font-bold" th:text="#{borrowedRecordForm.endDate}">End Date:</label>
       <input type="date" id="returnedDate" name="returnedDate" th:field="*{returnedDate}" class="mt-1 block w-full py-2 px-3 border border-gray-300 bg-white rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm">
     </div>
     <div th:if="${errorMessage}">
       <p th:text="${errorMessage}" class="text-red-500"></p>
     </div>
     <div class="flex space-x-4">
-      <button type="submit" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-5 rounded-lg duration-300 text-lg">Submit</button>
-      <a th:href="@{/borrowedRecords/borrowed-records-list}" class="bg-gray-500 hover:bg-gray-700 text-white font-bold py-2 px-5 rounded-lg duration-300 text-lg">Back to Borrowed Records</a>
+      <button type="submit" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-5 rounded-lg duration-300 text-lg" th:text="#{borrowedRecordForm.submit}">Submit</button>
+      <a th:href="@{/borrowedRecords/borrowed-records-list}" class="bg-gray-500 hover:bg-gray-700 text-white font-bold py-2 px-5 rounded-lg duration-300 text-lg" th:text="#{borrowedRecordForm.back}">Back to Borrowed Records</a>
     </div>
   </form>
 </div>
 <footer class="py-4 mt-10">
   <div class="container mx-auto text-center p-5">
-    <p class="text-gray-200">&copy; 2024 Library Management System. All rights reserved.</p>
+    <p class="text-gray-200" th:text="#{footer.copy}">&copy; 2024 Library Management System. All rights reserved.</p>
   </div>
 </footer>
 <script src="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.js"></script>

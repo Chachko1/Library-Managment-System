@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Add New Book</title>
+    <title th:text="#{bookForm.title}">Add New Book</title>
     <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700&display=swap" rel="stylesheet">
     <style>
@@ -16,49 +16,49 @@
     </style>
 </head>
 
-<body class="" style="background-color: #003366">
+<body style="background-color: #003366">
 <div th:replace="navbar::navbar"></div>
 <div class="container mx-auto mt-10 p-6 bg-white shadow-md rounded">
-    <h1 class="text-3xl font-bold mb-6">Book Form</h1>
+    <h1 class="text-3xl font-bold mb-6" th:text="#{bookForm.title}">Book Form</h1>
     <form th:action="@{/books}" th:object="${book}" method="post" class="space-y-4">
         <input type="hidden" th:field="*{id}"/>
 
         <div>
-            <label for="title" class="block text-xl font-medium text-gray-700">Title:</label>
+            <label for="title" class="block text-xl font-medium text-gray-700" th:text="#{bookForm.titleLabel}">Title:</label>
             <input type="text" id="title" th:field="*{title}" class="form-input mt-1 block w-full custom-input rounded p-1" required/>
             <div th:if="${#fields.hasErrors('title')}" th:errors="*{title}" class="text-red-600 mt-1 text-sm">
-                Title Error
+                <span th:text="#{bookForm.titleError}">Title Error</span>
             </div>
         </div>
 
         <div>
-            <label for="author" class="block text-xl font-medium text-gray-700">Author:</label>
+            <label for="author" class="block text-xl font-medium text-gray-700" th:text="#{bookForm.authorLabel}">Author:</label>
             <select id="author" th:field="*{authorId}" class="form-select mt-1 block w-full custom-input rounded p-1" required>
-                <option value="" disabled selected>Select an author</option>
+                <option value="" disabled selected th:text="#{bookForm.selectAuthor}">Select an author</option>
                 <option th:each="author : ${authors}" th:value="${author.id}" th:text="${author.name}"></option>
             </select>
             <div th:if="${#fields.hasErrors('authorId')}" th:errors="*{authorId}" class="text-red-600 mt-1 text-sm">
-                Author Error
+                <span th:text="#{bookForm.authorError}">Author Error</span>
             </div>
         </div>
 
         <div>
-            <label for="isbn" class="block text-xl font-medium text-gray-700">ISBN:</label>
+            <label for="isbn" class="block text-xl font-medium text-gray-700" th:text="#{bookForm.isbnLabel}">ISBN:</label>
             <input type="text" id="isbn" th:field="*{isbn}" class="form-input mt-1 block w-full custom-input rounded p-1" required/>
             <div th:if="${#fields.hasErrors('isbn')}" th:errors="*{isbn}" class="text-red-600 mt-1 text-sm">
-                ISBN Error
+                <span th:text="#{bookForm.isbnError}">ISBN Error</span>
             </div>
         </div>
 
         <div class="flex space-x-4">
-            <button type="submit" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-5 rounded-lg duration-300 text-lg">Save</button>
-            <a th:href="@{/books}" class="bg-gray-500 hover:bg-gray-700 text-white font-bold py-2 px-5 rounded-lg duration-300 text-lg">Back to Books</a>
+            <button type="submit" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-5 rounded-lg duration-300 text-lg" th:text="#{bookForm.saveButton}">Save</button>
+            <a th:href="@{/books}" class="bg-gray-500 hover:bg-gray-700 text-white font-bold py-2 px-5 rounded-lg duration-300 text-lg" th:text="#{bookForm.backButton}">Back to Books</a>
         </div>
     </form>
 </div>
 <footer class="py-4 mt-10">
     <div class="container mx-auto text-center p-5">
-        <p class="text-gray-200">&copy; 2024 Library Management System. All rights reserved.</p>
+        <p class="text-gray-200" th:text="#{footer.copy}">&copy; 2024 Library Management System. All rights reserved.</p>
     </div>
 </footer>
 </body>

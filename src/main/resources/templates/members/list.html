@@ -1,21 +1,23 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Members</title>
+    <title th:text="#{members.title}">Members</title>
     <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
 </head>
+<div th:replace="navbar::navbar"></div>
+
 <body class="bg-gray-100">
 <div th:replace="navbar::navbar"></div>
 <div class="container mx-auto mt-10 p-6">
-    <h1 class="text-4xl font-bold mb-6">Members</h1>
+    <h1 class="text-4xl font-bold mb-6" th:text="#{members.title}">Members</h1>
     <table class="min-w-full bg-white border border-gray-200 rounded shadow-md">
         <thead>
         <tr>
-            <th class="py-3 px-4 bg-gray-100 border-b text-left">Username</th>
-            <th class="py-3 px-4 bg-gray-100 border-b text-left">Password</th>
-            <th class="py-3 px-4 bg-gray-100 border-b text-left">Actions</th>
+            <th class="py-3 px-4 bg-gray-100 border-b text-left" th:text="#{members.username}">Username</th>
+            <th class="py-3 px-4 bg-gray-100 border-b text-left" th:text="#{members.password}">Password</th>
+            <th class="py-3 px-4 bg-gray-100 border-b text-left" th:text="#{members.actions}">Actions</th>
         </tr>
         </thead>
         <tbody>
@@ -23,13 +25,19 @@
             <td class="py-3 px-4 border-b" th:text="${member.username}">Username</td>
             <td class="py-3 px-4 border-b" th:text="${member.password}">Password</td>
             <td class="py-3 px-4 border-b">
-                <a th:href="@{/members/delete/{id}(id=${member.id})}" class="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded">Delete</a>
+                <a th:href="@{/members/delete/{id}(id=${member.id})}" class="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded" th:text="#{members.delete}">Delete</a>
             </td>
         </tr>
         </tbody>
     </table>
-    <a th:href="@{/members/new}" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded mt-6 inline-block">Add New Member</a>
+    <a th:href="@{/members/new}" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded mt-6 inline-block" th:text="#{members.addNew}">Add New Member</a>
 </div>
+<footer class="py-4 mt-10">
+    <div class="container mx-auto text-center p-5">
+        <p class="text-gray-200" th:text="#{footer.copy}">&copy; 2024 Library Management System. All rights reserved.</p>
+    </div>
+</footer>
+
 
 <script src="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.js"></script>
 </body>

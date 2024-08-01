@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Books</title>
+    <title th:text="#{booksPage.title}">Books</title>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700&display=swap" rel="stylesheet">
     <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
     <style>
@@ -12,17 +12,17 @@
         }
     </style>
 </head>
-<body class="" style="background-color: #003366">
+<body style="background-color: #003366">
 <div th:replace="navbar::navbar"></div>
 <div class="container mx-auto mt-10 p-6 bg-white shadow-md rounded">
-    <h1 class="text-3xl font-bold mb-6">Books</h1>
+    <h1 class="text-3xl font-bold mb-6" th:text="#{booksPage.title}">Books</h1>
     <table class="min-w-full divide-y divide-gray-400">
         <thead>
         <tr>
-            <th class="px-6 py-3 text-left  font-medium  uppercase tracking-wider text-xl font-bold">Title</th>
-            <th class="px-6 py-3 text-left  font-medium  uppercase tracking-wider text-xl font-bold">Author Name</th>
-            <th class="px-6 py-3 text-left  font-medium  uppercase tracking-wider text-xl font-bold">ISBN</th>
-            <th class="px-6 py-3 text-left  font-medium  uppercase tracking-wider text-xl font-bold">Actions</th>
+            <th class="px-6 py-3 text-left font-medium uppercase tracking-wider text-xl font-bold" th:text="#{booksPage.titleColumn}">Title</th>
+            <th class="px-6 py-3 text-left font-medium uppercase tracking-wider text-xl font-bold" th:text="#{booksPage.authorColumn}">Author Name</th>
+            <th class="px-6 py-3 text-left font-medium uppercase tracking-wider text-xl font-bold" th:text="#{booksPage.isbnColumn}">ISBN</th>
+            <th class="px-6 py-3 text-left font-medium uppercase tracking-wider text-xl font-bold" th:text="#{booksPage.actionsColumn}">Actions</th>
         </tr>
         </thead>
         <tbody class="bg-white divide-y divide-gray-400 text-xl">
@@ -36,7 +36,7 @@
         </tr>
         </tbody>
     </table>
-    <a th:href="@{/books/new}" class="mt-4 inline-block bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-5 rounded-lg duration-300 text-lg">Add New Book</a>
+    <a th:href="@{/books/new}" class="mt-4 inline-block bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-5 rounded-lg duration-300 text-lg" th:text="#{booksPage.addNewBook}">Add New Book</a>
 </div>
 <footer class="py-4 mt-10">
     <div class="container mx-auto text-center p-5">

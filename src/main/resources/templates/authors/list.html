@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Authors</title>
+    <title th:text="#{authorsPage.title}">Authors</title>
 
     <!-- Import Inter Font -->
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700&display=swap" rel="stylesheet">
@@ -16,31 +16,31 @@
         }
     </style>
 </head>
-<body class="" style="background-color: #003366">
+<body style="background-color: #003366">
 <div th:replace="navbar::navbar"></div>
 <div class="container mx-auto mt-10 p-6 bg-white shadow-md rounded">
-    <h1 class="text-3xl font-bold mb-6">Authors</h1>
+    <h1 class="text-3xl font-bold mb-6" th:text="#{authorsPage.title}">Authors</h1>
     <table class="min-w-full divide-y divide-gray-400">
         <thead>
         <tr>
-            <th class="px-6 py-3 text-left text-xs font-medium  uppercase tracking-wider text-xl font-bold">Name</th>
-            <th class="px-6 py-3 text-left text-xs font-medium  uppercase tracking-wider text-xl font-bold">Actions</th>
+            <th class="px-6 py-3 text-left text-xs font-medium uppercase tracking-wider text-xl font-bold" th:text="#{authorsPage.nameLabel}">Name</th>
+            <th class="px-6 py-3 text-left text-xs font-medium uppercase tracking-wider text-xl font-bold" th:text="#{authorsPage.actionsLabel}">Actions</th>
         </tr>
         </thead>
-        <tbody class="bg-white divide-y divide-gray-400 text-xl ">
+        <tbody class="bg-white divide-y divide-gray-400 text-xl">
         <tr th:each="author : ${authors}">
             <td class="px-6 py-4 whitespace-nowrap" th:text="${author.name}">Name</td>
             <td class="px-6 py-4 whitespace-nowrap">
-                <a th:href="@{/authors/delete/{id}(id=${author.id})}" class="bg-red-500 hover:bg-red-700 text-white font-bold py-1 text-lg px-5 rounded-lg duration-300">Delete</a>
+                <a th:href="@{/authors/delete/{id}(id=${author.id})}" class="bg-red-500 hover:bg-red-700 text-white font-bold py-1 text-lg px-5 rounded-lg duration-300" th:text="#{authorsPage.deleteButton}">Delete</a>
             </td>
         </tr>
         </tbody>
     </table>
-    <a th:href="@{/authors/new}" class="mt-4 inline-block bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-5 rounded-lg duration-300 text-lg ">Add New Author</a>
+    <a th:href="@{/authors/new}" class="mt-4 inline-block bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-5 rounded-lg duration-300 text-lg" th:text="#{authorsPage.addButton}">Add New Author</a>
 </div>
 <footer class="py-4 mt-10">
     <div class="container mx-auto text-center p-5">
-        <p class="text-gray-200">&copy; 2024 Library Management System. All rights reserved.</p>
+        <p class="text-gray-200" th:text="#{footer.copy}">&copy; 2024 Library Management System. All rights reserved.</p>
     </div>
 </footer>
 </body>
