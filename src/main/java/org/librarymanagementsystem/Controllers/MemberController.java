@@ -2,7 +2,6 @@ package org.librarymanagementsystem.Controllers;
 
 import jakarta.validation.Valid;
 import org.librarymanagementsystem.DTOs.MemberDTO;
-import org.librarymanagementsystem.config.UserSession;
 import org.librarymanagementsystem.models.Member;
 import org.librarymanagementsystem.services.MemberService;
 import org.springframework.beans.factory.annotation.Autowired;

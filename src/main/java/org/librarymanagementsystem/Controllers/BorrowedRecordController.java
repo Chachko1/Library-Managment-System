@@ -1,10 +1,5 @@
 package org.librarymanagementsystem.Controllers;
 
-import jakarta.validation.Valid;
-import org.librarymanagementsystem.DTOs.BookDTO;
-import org.librarymanagementsystem.DTOs.BorrowRecordDTO;
-import org.librarymanagementsystem.DTOs.MemberDTO;
-import org.librarymanagementsystem.config.UserSession;
 import org.librarymanagementsystem.models.Book;
 import org.librarymanagementsystem.models.BorrowRecord;
 import org.librarymanagementsystem.models.Member;
@@ -17,7 +12,6 @@ import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
-import java.security.PublicKey;
 import java.time.LocalDate;
 import java.util.List;
 import java.util.Optional;

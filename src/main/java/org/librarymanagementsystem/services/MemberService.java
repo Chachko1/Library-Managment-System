@@ -2,15 +2,19 @@ package org.librarymanagementsystem.services;
 
 import org.librarymanagementsystem.DTOs.LoginDTO;
 import org.librarymanagementsystem.DTOs.MemberDTO;
-import org.librarymanagementsystem.config.UserSession;
+import org.librarymanagementsystem.Enums.RoleEnum;
 import org.librarymanagementsystem.mappers.MemberMapper;
 import org.librarymanagementsystem.models.Member;
+import org.librarymanagementsystem.models.Role;
 import org.librarymanagementsystem.repositories.MemberRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import java.util.Collection;
+import java.util.Collections;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -21,14 +25,14 @@ public class MemberService {
 
     @Autowired
     private MemberRepository memberRepository;
+
     @Autowired
-    private final UserSession userSession;
+    private final PasswordEncoder encoder;
 
-
-
-    public MemberService(UserSession userSession) {
-        this.userSession = userSession;
+    public MemberService(PasswordEncoder encoder) {
+        this.encoder = encoder;
     }
+
 
     public List<MemberDTO> getAllMembers(){
         return memberRepository.findAll().stream().map(memberMapper::toDTO).collect(Collectors.toList());
@@ -36,6 +40,20 @@ public class MemberService {
 
     public MemberDTO saveMember(MemberDTO memberDto){
         Member member=memberMapper.toEntity(memberDto);
+        Role role;
+        if (memberRepository.findAll().isEmpty()){
+            role=new Role();
+            role.setRoleEnum(RoleEnum.ADMIN);
+
+        }else {
+            role=new Role();
+            role.setRoleEnum(RoleEnum.USER);
+
+        }
+
+        role.setRolesAddedBy(member);
+        member.setRoles(Collections.singletonList(role));
+        member.setPassword(encoder.encode(memberDto.getPassword()));
         return memberMapper.toDTO(memberRepository.save(member));
     }
 
@@ -47,14 +65,7 @@ public class MemberService {
         return memberRepository.existsByUsername(username);
     }
 
-    public boolean validateUser(LoginDTO loginDTO) {
-        Member member=memberRepository.findByUsername(loginDTO.getUsername());
-        if (member!=null&&member.getPassword().equals(loginDTO.getPassword())){
-            userSession.login(member.getId(),loginDTO.getUsername());
-            return true;
-        }
-        return false;
-    }
+
 
     public Member getMemberByUsername(String username) {
        return memberRepository.findByUsername(username);

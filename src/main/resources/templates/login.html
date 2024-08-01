@@ -29,7 +29,7 @@
           <input type="password" id="password" name="password" class=" text-lg mt-1 block w-full px-3 py-2 bg-white border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring focus:border-blue-300" required th:field="*{password}" />
           <div th:if="${#fields.hasErrors('password')}" class="text-red-600 mt-1"><small th:errors="*{password}"></small></div>
         </div>
-        <div th:if="${session.loginError}" class="text-red-600 mb-4"><small th:text="${session.loginError}"></small></div>
+<!--        <div th:if="${session.loginError}" class="text-red-600 mb-4"><small th:text="${session.loginError}"></small></div>-->
         <div class="flex gap-8">
           <button type="submit" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-5 rounded-lg duration-300 text-lg" th:text="#{form.login}">Sign In</button>
           <a href="#" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-5 rounded-lg duration-300 text-lg py-3" th:href="@{/register}" th:text="#{form.register}">Sign Up</a>

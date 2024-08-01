@@ -2,7 +2,6 @@ package org.librarymanagementsystem.Controllers;
 
 import jakarta.validation.Valid;
 import org.librarymanagementsystem.DTOs.AuthorDTO;
-import org.librarymanagementsystem.config.UserSession;
 import org.librarymanagementsystem.models.Member;
 import org.librarymanagementsystem.services.AuthorService;
 import org.librarymanagementsystem.services.MemberService;

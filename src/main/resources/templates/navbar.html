@@ -29,7 +29,9 @@
                 <a class="text-gray-300 hover:text-white p-1 transform transition-transform duration-300 hover:scale-110" href="#" th:href="@{/borrowedRecords/borrowed-records-list}" sec:authorize="isAuthenticated()" th:text="#{navbar.borrowedRecords}">Borrowed Records</a>
                 <a class="text-gray-300 hover:text-white p-1 transform transition-transform duration-300 hover:scale-110" href="#" th:href="@{/login}" sec:authorize="!isAuthenticated()" th:text="#{navbar.login}">Login</a>
                 <a class="text-gray-300 hover:text-white p-1 transform transition-transform duration-300 hover:scale-110" href="#" th:href="@{/register}" sec:authorize="!isAuthenticated()" th:text="#{navbar.register}">Register</a>
-                <a class="text-gray-300 hover:text-white p-1 transform transition-transform duration-300 hover:scale-110" href="#" th:href="@{/logout}" sec:authorize="isAuthenticated()" th:text="#{navbar.logout}"><form th:action="@{/logout}" th:method="post"><button type="submit" > Logout</button></form></a>
+                <form th:action="@{/logout}" method="post" sec:authorize="isAuthenticated()">
+                    <button type="submit" class="text-gray-300 hover:text-white p-1 transform transition-transform duration-300 hover:scale-110 bg-transparent border-none cursor-pointer" th:text="#{navbar.logout}">Logout</button>
+                </form>
 
                 <!-- Language Selection -->
                 <form th:method="get" class="language-form gap-4" style="display: flex; align-items: center; padding: 0.15rem;">
@@ -49,8 +51,6 @@
         var menu = document.getElementById('navbar-menu');
         menu.classList.toggle('hidden');
     });
-
-
 </script>
 </body>
 </html>

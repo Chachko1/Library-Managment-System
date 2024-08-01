@@ -1,12 +1,10 @@
 package org.librarymanagementsystem.Controllers;
 
-import jakarta.servlet.http.HttpSession;
-import jakarta.validation.Valid;
 import org.librarymanagementsystem.DTOs.LoginDTO;
 import org.librarymanagementsystem.DTOs.MemberDTO;
-import org.librarymanagementsystem.config.UserSession;
 import org.librarymanagementsystem.models.Book;
 import org.librarymanagementsystem.models.Member;
+import org.librarymanagementsystem.models.Role;
 import org.librarymanagementsystem.services.BookService;
 import org.librarymanagementsystem.services.MemberService;
 import org.springframework.stereotype.Controller;
@@ -35,18 +33,21 @@ public class HomeController {
     @GetMapping("/")
     public String showHomePage(Model model){
         Member currentMember=memberService.getCurrentMember();
-        if (memberService.getCurrentMember()==null){
-            Member member=memberService.getMemberByUsername(memberService.getCurrentMember().getUsername());
+
+        if (memberService.getCurrentMember()==null) {
+
+            return "index";
+        }else{
             String message="Add Books so we can recommend you every day a book!";
 
-            if (!member.isRecommendedBook()){
+            if (!currentMember.isRecommendedBook()){
                 Optional<Book> book=bookService.getRandomBook();
                 if (book.isPresent()){
                     message=book.get().getTitle();
                 }
                 model.addAttribute("showRecommendedBook",true);
                 model.addAttribute("bookTitle",message);
-                memberService.updateBookStatus(member);
+                memberService.updateBookStatus(currentMember);
             }else {
                 model.addAttribute("showRecommendedBook",false);
             }
@@ -84,6 +85,7 @@ public class HomeController {
             return "redirect:/register";
         }
        memberService.saveMember(memberDTO);
+
 
 
         return "redirect:/login";
