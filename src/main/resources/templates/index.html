@@ -29,7 +29,7 @@
     <div class="container mx-auto">
         <h1 class="text-gray-200 text-4xl font-bold mb-4" th:text="#{hero.welcome}">Welcome to the Library Management System</h1>
         <p class="text-lg text-gray-200" th:text="#{hero.manage}">Manage your books efficiently.</p>
-        <p id="username"  class="text-lg text-gray-200"></p> <!-- New paragraph for the username -->
+        <p id="username" sec:authorize="isAuthenticated()"  class="text-lg text-gray-200"></p> <!-- New paragraph for the username -->
     </div>
 </section>
 

@@ -34,13 +34,13 @@ public class RestLibraryController {
         }
         MemberDTO memberDTO=modelMapper.map(member,MemberDTO.class);
         memberDTO.setUsername(member.getUsername());
-        memberDTO.setPassword(member.getPassword());
+        memberDTO.setPassword(null);
         return new ResponseEntity<>(memberDTO,HttpStatus.OK);
 
     }
     @PostMapping
     public ResponseEntity<MemberDTO> createMember(@Valid @RequestBody MemberDTO memberDTO) {
-        // Check if current user is authenticated, if needed
+
         Member currentMember = memberService.getCurrentMember();
         if (currentMember == null) {
             return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
@@ -48,7 +48,7 @@ public class RestLibraryController {
 
        memberService.saveMember(memberDTO);
 
-        // Return the response entity with the created member
+
         return new ResponseEntity<>(memberDTO, HttpStatus.CREATED);
     }
 
