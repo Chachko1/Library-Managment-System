@@ -13,7 +13,7 @@ public class Author {
     private long Id;
     @NotBlank
     private String name;
-    @OneToMany(mappedBy = "author")
+    @OneToMany(mappedBy = "author", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Book> books;
 
     public Author(long id, String name) {

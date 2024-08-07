@@ -1,9 +1,9 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<html xmlns:th="https://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security" lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title th:text="#{members.title}">Members</title>
+    <title >Members</title>
     <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
 </head>
 
@@ -11,26 +11,30 @@
 <body class="bg-gray-100">
 <div th:replace="navbar::navbar"></div>
 <div class="container mx-auto mt-10 p-6">
-    <h1 class="text-4xl font-bold mb-6" th:text="#{members.title}">Members</h1>
-    <table class="min-w-full bg-white border border-gray-200 rounded shadow-md">
+    <h1 class="text-4xl font-bold mb-6" >Members</h1>
+    <table>
         <thead>
         <tr>
-            <th class="py-3 px-4 bg-gray-100 border-b text-left" th:text="#{members.username}">Username</th>
-            <th class="py-3 px-4 bg-gray-100 border-b text-left" th:text="#{members.password}">Password</th>
-            <th class="py-3 px-4 bg-gray-100 border-b text-left" th:text="#{members.actions}">Actions</th>
+            <th class="py-3 px-4 bg-gray-100 border-b text-left" >Username</th>
+            <th class="py-3 px-4 bg-gray-100 border-b text-left" >Password</th>
+            <th class="py-3 px-4 bg-gray-100 border-b text-left" >Actions</th>
         </tr>
         </thead>
         <tbody>
+        <!-- Assuming 'members' is a list of MemberDTO objects -->
         <tr th:each="member : ${members}">
-            <td class="py-3 px-4 border-b" th:text="${member.username}">Username</td>
-            <td class="py-3 px-4 border-b" th:text="${member.password}">Password</td>
-            <td class="py-3 px-4 border-b">
-                <a th:href="@{/members/delete/{id}(id=${member.id})}" class="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded" th:text="#{members.delete}">Delete</a>
+            <td class="py-3 px-4 border-b text-left" th:text="${member.username}">Username</td>
+            <td class="py-3 px-4 border-b text-left" th:text="${member.password}">Password</td>
+            <td class="py-3 px-4 border-b text-left">
+
+
+                <a th:href="@{/members/delete/{id}(id=${member.id})}" class="text-red-600">Delete</a>
             </td>
         </tr>
         </tbody>
     </table>
-    <a th:href="@{/members/new}" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded mt-6 inline-block" th:text="#{members.addNew}">Add New Member</a>
+
+
 </div>
 <footer class="py-4 mt-10">
     <div class="container mx-auto text-center p-5">

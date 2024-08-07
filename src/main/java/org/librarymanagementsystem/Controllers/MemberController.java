@@ -20,7 +20,7 @@ public class MemberController {
     private MemberService memberService;
 
 
-    @GetMapping
+    @GetMapping("/list")
     public String getAllListMembers(Model model){
         Member currentMember=memberService.getCurrentMember();
         if (currentMember==null){

@@ -32,6 +32,8 @@ public class BookService {
     @Autowired
     private BookMapper bookMapper;
 
+
+
     public List<BookDTO> getAllBooks(){
         return bookRepository.findAll().stream().map(bookMapper::toDTO).collect(Collectors.toList());
     }
@@ -54,6 +56,7 @@ public class BookService {
     }
 
     public void deleteBook(Long id){
+
         bookRepository.deleteById(id);
     }
 
