@@ -1,49 +1,55 @@
 package org.librarymanagementsystem.Controllers;
 
-import org.librarymanagementsystem.DTOs.BookDTO;
-import org.librarymanagementsystem.mappers.BookMapper;
-import org.librarymanagementsystem.models.Book;
-import org.librarymanagementsystem.services.BookService;
-import org.springframework.beans.factory.annotation.Autowired;
+import jakarta.validation.Valid;
+import org.librarymanagementsystem.DTOs.MemberDTO;
+
+import org.librarymanagementsystem.models.Member;
+
+import org.librarymanagementsystem.services.MemberService;
+import org.modelmapper.ModelMapper;
+
 import org.springframework.http.HttpStatus;
-import org.springframework.http.HttpStatusCode;
+
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.Optional;
+
 
 @RestController
-@RequestMapping("/api/library")
+@RequestMapping("/api/members")
 public class RestLibraryController {
-    @Autowired
-    private BookService bookService;
+   private MemberService memberService;
+   private ModelMapper modelMapper;
 
-    @Autowired
-    private BookMapper bookMapper;
+    public RestLibraryController(MemberService memberService, ModelMapper modelMapper) {
+        this.memberService = memberService;
+        this.modelMapper = modelMapper;
+    }
 
-    @GetMapping("/books/{isbn}")
-    public ResponseEntity<Book> getBookByIsbn(String isbn){
-        BookDTO book = bookService.getBookByIsbn(isbn);
-
-        if (book != null){
-            return ResponseEntity.ok(bookMapper.toEntity(book));
+    @GetMapping("/current")
+    public ResponseEntity<MemberDTO> getCurrentMember(){
+        Member member=memberService.getCurrentMember();
+        if (member==null){
+            return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
         }
-        else {
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(null);
+        MemberDTO memberDTO=modelMapper.map(member,MemberDTO.class);
+        memberDTO.setUsername(member.getUsername());
+        memberDTO.setPassword(member.getPassword());
+        return new ResponseEntity<>(memberDTO,HttpStatus.OK);
+
+    }
+    @PostMapping
+    public ResponseEntity<MemberDTO> createMember(@Valid @RequestBody MemberDTO memberDTO) {
+        // Check if current user is authenticated, if needed
+        Member currentMember = memberService.getCurrentMember();
+        if (currentMember == null) {
+            return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
         }
+
+       memberService.saveMember(memberDTO);
+
+        // Return the response entity with the created member
+        return new ResponseEntity<>(memberDTO, HttpStatus.CREATED);
     }
 
-    @PostMapping("/books")
-    public ResponseEntity<Book> addBook (@RequestBody Book book){
-        BookDTO createdBook=bookService.saveBook(bookMapper.toDTO(book));
-
-        return  ResponseEntity.status(HttpStatus.CREATED).body(bookMapper.toEntity(createdBook));
-    }
-
-    @DeleteMapping("/books/{id}")
-    public ResponseEntity<Void> deleteBook (@PathVariable Long id){
-        bookService.deleteBook(id);
-        return ResponseEntity.noContent().build();
-
-    }
 }

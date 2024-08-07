@@ -47,18 +47,18 @@ public class MemberController {
     @PostMapping
     public String saveMember(@Valid @ModelAttribute MemberDTO memberDTO, BindingResult bindingResult){
         if (bindingResult.hasErrors()){
-            return "members/form";
+            return "members/list";
         }
 
         memberService.saveMember(memberDTO);
-        return "redirect:/members";
+        return "redirect:/members/list";
 
     }
 
     @GetMapping("delete/{id}")
     public String deleteMember(@PathVariable Long id ){
         memberService.deleteMember(id);
-        return "redirect:/members";
+        return "redirect:/members/list";
 
     }
 
