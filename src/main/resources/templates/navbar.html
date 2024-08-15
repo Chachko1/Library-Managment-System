@@ -29,6 +29,8 @@
                 <a class="text-gray-300 hover:text-white p-1 transform transition-transform duration-300 hover:scale-110" href="#" th:href="@{/borrowedRecords/borrowed-records-list}" sec:authorize="isAuthenticated()" th:text="#{navbar.borrowedRecords}">Borrowed Records</a>
                 <a class="text-gray-300 hover:text-white p-1 transform transition-transform duration-300 hover:scale-110" href="#" th:href="@{/login}" sec:authorize="!isAuthenticated()" th:text="#{navbar.login}">Login</a>
                 <a class="text-gray-300 hover:text-white p-1 transform transition-transform duration-300 hover:scale-110" href="#" th:href="@{/register}" sec:authorize="!isAuthenticated()" th:text="#{navbar.register}">Register</a>
+                <a sec:authorize="hasRole('ADMIN')"  class="text-gray-300 hover:text-white p-1 transform transition-transform duration-300 hover:scale-110" th:href="@{/members/list}" th:text="#{navbar.messages}" style="color: #8B4513 !important;">Messages</a>
+
                 <form th:action="@{/logout}" method="post" sec:authorize="isAuthenticated()">
                     <button type="submit" class="text-gray-300 hover:text-white p-1 transform transition-transform duration-300 hover:scale-110 bg-transparent border-none cursor-pointer" th:text="#{navbar.logout}">Logout</button>
                 </form>

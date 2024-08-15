@@ -55,7 +55,7 @@ public class MemberController {
 
     }
 
-    @GetMapping("delete/{id}")
+    @PostMapping("/delete/{id}")
     public String deleteMember(@PathVariable Long id ){
         memberService.deleteMember(id);
         return "redirect:/members/list";

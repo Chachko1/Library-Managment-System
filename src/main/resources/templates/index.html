@@ -85,7 +85,7 @@
 <script>
     async function fetchCurrentMember() {
         try {
-            const response = await fetch('/api/members/current');
+            const response = await fetch('/api/members');
             if (!response.ok) {
                 throw new Error('Network response was not ok ' + response.statusText);
             }

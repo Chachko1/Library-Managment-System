@@ -26,7 +26,7 @@ public class RestLibraryController {
         this.modelMapper = modelMapper;
     }
 
-    @GetMapping("/current")
+    @GetMapping
     public ResponseEntity<MemberDTO> getCurrentMember(){
         Member member=memberService.getCurrentMember();
         if (member==null){
@@ -38,7 +38,7 @@ public class RestLibraryController {
         return new ResponseEntity<>(memberDTO,HttpStatus.OK);
 
     }
-    @PostMapping
+    @PostMapping("/current")
     public ResponseEntity<MemberDTO> createMember(@Valid @RequestBody MemberDTO memberDTO) {
 
         Member currentMember = memberService.getCurrentMember();
@@ -51,5 +51,7 @@ public class RestLibraryController {
 
         return new ResponseEntity<>(memberDTO, HttpStatus.CREATED);
     }
+
+
 
 }

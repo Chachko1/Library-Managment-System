@@ -1,5 +1,6 @@
 package org.librarymanagementsystem.Controllers;
 
+import jakarta.validation.Valid;
 import org.librarymanagementsystem.DTOs.LoginDTO;
 import org.librarymanagementsystem.DTOs.MemberDTO;
 import org.librarymanagementsystem.models.Book;
@@ -75,7 +76,7 @@ public class HomeController {
         return new LoginDTO();
     }
     @PostMapping("/register")
-    public String registerMember(MemberDTO memberDTO, BindingResult bindingResult, RedirectAttributes redirectAttributes){
+    public String registerMember(@Valid MemberDTO memberDTO, BindingResult bindingResult, RedirectAttributes redirectAttributes){
         if (memberService.existsByUsername(memberDTO.getUsername())){
             bindingResult.rejectValue("username", "error.registerData", "Member already exists!");
         }

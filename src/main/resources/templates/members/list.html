@@ -16,19 +16,22 @@
         <thead>
         <tr>
             <th class="py-3 px-4 bg-gray-100 border-b text-left" >Username</th>
-            <th class="py-3 px-4 bg-gray-100 border-b text-left" >Password</th>
-            <th class="py-3 px-4 bg-gray-100 border-b text-left" >Actions</th>
+
+            <th class="py-3 px-4 bg-gray-100 border-b text-left" >Delete</th>
         </tr>
         </thead>
         <tbody>
         <!-- Assuming 'members' is a list of MemberDTO objects -->
         <tr th:each="member : ${members}">
             <td class="py-3 px-4 border-b text-left" th:text="${member.username}">Username</td>
-            <td class="py-3 px-4 border-b text-left" th:text="${member.password}">Password</td>
+
             <td class="py-3 px-4 border-b text-left">
-
-
-
+                <form th:action="@{/members/delete/{id}(id=${member.id})}" method="post">
+                    <input type="hidden" name="_method" value="delete"/>
+                    <button type="submit" class="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded">
+                        Delete
+                    </button>
+                </form>
             </td>
         </tr>
         </tbody>

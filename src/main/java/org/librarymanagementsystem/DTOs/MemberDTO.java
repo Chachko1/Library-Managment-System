@@ -1,13 +1,18 @@
 package org.librarymanagementsystem.DTOs;
 
+import jakarta.validation.constraints.NotBlank;
+import org.hibernate.validator.constraints.Length;
+
 import java.util.ArrayList;
 import java.util.List;
 
 public class MemberDTO {
     private long id;
-
+    @NotBlank(message = "Username cannot be empty!")
+    @Length(min = 3,max = 20,message = "Username must be between 3 and 20 characters!")
     private String username;
-
+    @NotBlank(message = "Password cannot be empty!")
+    @Length(min = 3,max = 20,message = "Password must be between 3 and 20 characters!")
     private String password;
 
     private List<BorrowRecordDTO> borrowRecords;
