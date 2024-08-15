@@ -11,6 +11,7 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Controller
 @RequestMapping("/members")
@@ -26,8 +27,12 @@ public class MemberController {
         if (currentMember==null){
             return "redirect:/login";
         }
-        List<MemberDTO> members=memberService.getAllMembers();
-        model.addAttribute("members",members);
+        List<MemberDTO> members = memberService.getAllMembers().stream()
+                .filter(member -> !member.getUsername().equals(currentMember.getUsername()))
+                .toList();
+
+        model.addAttribute("noOtherMembers", members.isEmpty());  // <-- This ensures that it's never null
+        model.addAttribute("members", members);
 
         return "members/list";
     }

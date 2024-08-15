@@ -3,28 +3,31 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title >Members</title>
+    <title>Members</title>
     <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
 </head>
-
 
 <body class="bg-gray-100">
 <div th:replace="navbar::navbar"></div>
 <div class="container mx-auto mt-10 p-6">
-    <h1 class="text-4xl font-bold mb-6" >Members</h1>
-    <table>
+    <h1 class="text-4xl font-bold mb-6">Members</h1>
+
+    <!-- Display a message if there are no other members -->
+    <div th:if="${noOtherMembers}" class="text-center text-gray-700 text-lg">
+        No other members registered.
+    </div>
+
+    <!-- Only display the table if there are members to show -->
+    <table th:if="${!noOtherMembers}" class="min-w-full bg-white">
         <thead>
         <tr>
-            <th class="py-3 px-4 bg-gray-100 border-b text-left" >Username</th>
-
-            <th class="py-3 px-4 bg-gray-100 border-b text-left" >Delete</th>
+            <th class="py-3 px-4 bg-gray-100 border-b text-left">Username</th>
+            <th class="py-3 px-4 bg-gray-100 border-b text-left">Delete</th>
         </tr>
         </thead>
         <tbody>
-        <!-- Assuming 'members' is a list of MemberDTO objects -->
         <tr th:each="member : ${members}">
             <td class="py-3 px-4 border-b text-left" th:text="${member.username}">Username</td>
-
             <td class="py-3 px-4 border-b text-left">
                 <form th:action="@{/members/delete/{id}(id=${member.id})}" method="post">
                     <input type="hidden" name="_method" value="delete"/>
@@ -36,15 +39,13 @@
         </tr>
         </tbody>
     </table>
-
-
 </div>
+
 <footer class="py-4 mt-10">
     <div class="container mx-auto text-center p-5">
         <p class="text-gray-200" th:text="#{footer.copy}">&copy; 2024 Library Management System. All rights reserved.</p>
     </div>
 </footer>
-
 
 <script src="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.js"></script>
 </body>
