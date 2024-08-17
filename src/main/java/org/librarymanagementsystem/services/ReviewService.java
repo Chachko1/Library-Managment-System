@@ -31,4 +31,8 @@ public class ReviewService {
     public void deleteReviewById(Long id) {
         reviewRepository.deleteById(id);
     }
+
+    public void deleteReviewByBook(Long bookId) {
+        reviewRepository.deleteByBookId(bookId);
+    }
 }

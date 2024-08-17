@@ -37,7 +37,9 @@ public interface MemberMapper {
                 .toList();
     }
 
+    @Mapping(target = "memberId", ignore = true) // Prevents recursion
     BorrowRecordDTO borrowRecordToBorrowRecordDTO(BorrowRecord borrowRecord);
 
+    @Mapping(target = "member", ignore = true) // Prevents recursion
     ReviewDTO reviewToReviewDTO(Review review);
 }

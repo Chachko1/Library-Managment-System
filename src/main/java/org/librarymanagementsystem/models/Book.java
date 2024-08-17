@@ -3,6 +3,8 @@ package org.librarymanagementsystem.models;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
 
+import java.util.List;
+
 @Entity
 public class Book {
     @Id
@@ -22,6 +24,8 @@ public class Book {
 
     @Column(name = "is_borrowed") // Added field to track if the book is borrowed
     private boolean isBorrowed;
+    @OneToMany(mappedBy = "book", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<Review> reviews;
 
 
     public Book() {

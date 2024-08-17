@@ -11,6 +11,7 @@ import org.librarymanagementsystem.repositories.BookRepository;
 import org.librarymanagementsystem.repositories.BorrowRecordRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDate;
 import java.util.List;
@@ -31,6 +32,9 @@ public class BookService {
 
     @Autowired
     private BookMapper bookMapper;
+
+    @Autowired
+    private ReviewService reviewService;
 
 
 
@@ -100,5 +104,11 @@ public class BookService {
         }
         int index = new Random().nextInt((int) count);
         return Optional.ofNullable(bookRepository.findAll().get(index));
+    }
+
+    @Transactional
+    public void deleteBookAndReviews(Long bookId) {
+        reviewService.deleteReviewByBook(bookId);
+        bookRepository.deleteById(bookId);
     }
 }
