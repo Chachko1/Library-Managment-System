@@ -60,6 +60,7 @@ public class BookService {
     }
 
     public void deleteBook(Long id){
+        borrowRecordRepository.deleteByBookId(id);
 
         bookRepository.deleteById(id);
     }
